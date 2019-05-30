@@ -1,9 +1,10 @@
 import React, {Component, useState } from 'react';
+import ResourceList from './ResourceList';
 
 //class App extends Component {
   //  state = {resource: 'posts'};
 const App = () => {
-    const [resource, setResource] = useState('posts');
+    const [resource, setResource] = useState('posts');//Array Destructuring
    // render() {
         return (
             <div>
@@ -15,10 +16,10 @@ const App = () => {
                         ToDos
                     </button>
                 </div>
-                {resource}
+                <ResourceList resource={resource} />
             </div>
         );
    // }
-}
+};
 
 export default App;
