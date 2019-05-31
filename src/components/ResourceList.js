@@ -15,25 +15,43 @@ class ResourceList extends Component {
     }
 
     async componentDidMount() {*/
-const ResourceList = () => {
+const ResourceList = ({resource}) => {
     const [resources, setResources] = useState([]);
 
-    const fetchResource = async () => {
+    const fetchResource = async (resource) => {
         const response = await axios.get(
-            `https://jsonplaceholder.typicode.com/${this.props.resource}`
+            `https://jsonplaceholder.typicode.com/${resource}`
         );
 
-        this.setState({resources: response.data});
+        //  this.setState({resources: response.data});
+        setResources(response.data);
     };
 
-   // render() {
-        return (
-            <div>
-                {resources.length}
-            </div>
-        );
-   // }
+    useEffect(() => {
+        fetchResource(resource);
+    }, [resource]);
+
+    // render() {
+    return (
+        <div>
+            {resources.length}
+        </div>
+    );
+    // }
 };
 
-
 export default ResourceList;
+
+/* L327 min 3:30..>  Defining and Invoking a Function on same step.
+useEffect(
+    () => {
+        (async (resource) => {
+            const response = await axios.get(
+                `https://jsonplaceholder.typicode.com/${resource}`
+            );
+
+            setResources(response.data);
+        })(resource);
+    },
+            [resource]
+    );*/
