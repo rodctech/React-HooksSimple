@@ -18,40 +18,44 @@ class ResourceList extends Component {
 const ResourceList = ({resource}) => {
     const [resources, setResources] = useState([]);
 
-    const fetchResource = async (resource) => {
-        const response = await axios.get(
-            `https://jsonplaceholder.typicode.com/${resource}`
-        );
+  //   L327 min 3:30..>  Defining and Invoking a Function on same step.
+ useEffect(
+     () => {
+         (async (resource) => {
+             const response = await axios.get(
+                 `https://jsonplaceholder.typicode.com/${resource}`
+             );
 
-        //  this.setState({resources: response.data});
-        setResources(response.data);
-    };
-
-    useEffect(() => {
-        fetchResource(resource);
-    }, [resource]);
+             setResources(response.data);
+         })(resource);
+     },
+             [resource]
+     );
 
     // render() {
     return (
-        <div>
-            {resources.length}
-        </div>
+        <ul>
+            {resources.map(record => (
+                <li key={record.id}>{record.title}</li>
+            ))}
+        </ul>
     );
     // }
 };
 
 export default ResourceList;
 
-/* L327 min 3:30..>  Defining and Invoking a Function on same step.
-useEffect(
-    () => {
-        (async (resource) => {
-            const response = await axios.get(
-                `https://jsonplaceholder.typicode.com/${resource}`
-            );
 
-            setResources(response.data);
-        })(resource);
-    },
-            [resource]
-    );*/
+/*  REFACTORED useEffect^^ to define and invoke function on same step ^^^
+const fetchResource = async (resource) => {
+    const response = await axios.get(
+        `https://jsonplaceholder.typicode.com/${resource}`
+    );
+
+    //  this.setState({resources: response.data});
+    setResources(response.data);
+};
+
+useEffect(() => {
+    fetchResource(resource);
+}, [resource]);*/
