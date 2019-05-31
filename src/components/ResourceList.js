@@ -1,5 +1,7 @@
-import React, {Component, useState, useEffect} from 'react';
-import axios from 'axios';
+import React/*, {Component, useState, useEffect}*/ from 'react';
+// import axios from 'axios';  MOVED TO NEW useRes.js file for REUSE
+import useResources from './useResources';
+
 
 /*  REFACTORED INTO FUNCTIONAL Comp
 class ResourceList extends Component {
@@ -16,25 +18,7 @@ class ResourceList extends Component {
 
     async componentDidMount() {*/
 
-const useResources = (resource) => {
-    const [resources, setResources] = useState([]);
 
-    //   L327 min 3:30..>  Defining and Invoking a Function on same step.
-    useEffect(
-        () => {
-            (async (resource) => {
-                const response = await axios.get(
-                    `https://jsonplaceholder.typicode.com/${resource}`
-                );
-
-                setResources(response.data);
-            })(resource);
-        },
-        [resource]
-    );
-
-    return resources;
-};
 
 const ResourceList = ({resource}) => {
     const resources = useResources(resource);
