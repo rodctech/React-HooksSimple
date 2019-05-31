@@ -1,7 +1,7 @@
 import React, {Component, useState, useEffect} from 'react';
 import axios from 'axios';
 
-/*  REFACTOR INTO FUNCTIONAL Comp
+/*  REFACTORED INTO FUNCTIONAL Comp
 class ResourceList extends Component {
     state = {resources: [ ]};
 
@@ -15,22 +15,29 @@ class ResourceList extends Component {
     }
 
     async componentDidMount() {*/
-const ResourceList = ({resource}) => {
+
+const useResources = (resource) => {
     const [resources, setResources] = useState([]);
 
-  //   L327 min 3:30..>  Defining and Invoking a Function on same step.
- useEffect(
-     () => {
-         (async (resource) => {
-             const response = await axios.get(
-                 `https://jsonplaceholder.typicode.com/${resource}`
-             );
+    //   L327 min 3:30..>  Defining and Invoking a Function on same step.
+    useEffect(
+        () => {
+            (async (resource) => {
+                const response = await axios.get(
+                    `https://jsonplaceholder.typicode.com/${resource}`
+                );
 
-             setResources(response.data);
-         })(resource);
-     },
-             [resource]
-     );
+                setResources(response.data);
+            })(resource);
+        },
+        [resource]
+    );
+
+    return resources;
+};
+
+const ResourceList = ({resource}) => {
+    const resources = useResources(resource);
 
     // render() {
     return (
